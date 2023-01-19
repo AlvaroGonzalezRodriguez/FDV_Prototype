@@ -8,6 +8,7 @@ public class BulletFWM01 : Bullet
     private float bulletSpeed;
     private float initializationTime;
     private float bulletDmg;
+	private float lastTrue;
 
     private Rigidbody2D rb;
     private Vector3 direction;
@@ -36,9 +37,9 @@ public class BulletFWM01 : Bullet
     void FixedUpdate()
     {
         rb.velocity = direction * bulletSpeed;
-        if(Time.timeSinceLevelLoad - initializationTime > 5.0f)
+        if(Time.time > lastTrue + 5.0f)
         {
-            this.gameObject.SetActive(false);
+           this.gameObject.SetActive(false);
         }
         if(animator.GetBool("isDestroy"))
         {
@@ -51,10 +52,10 @@ public class BulletFWM01 : Bullet
             Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), GetComponent<Collider2D>()); 
         }
 		
-		if(rb.velocity.x <= 0.5f && rb.velocity.y == 0.5f)
-		{
-			DestroyBullet();
-		}
+		//if(rb.velocity.x <= 0.5f && rb.velocity.y == 0.5f)
+		//{
+		//	DestroyBullet();
+		//}
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -86,4 +87,14 @@ public class BulletFWM01 : Bullet
     {
         return bulletDmg;
     }
+	
+	public void setTrue(float ltrue)
+	{
+		lastTrue = ltrue;
+	}
+	
+	public void setBulletSpeed(float speed)
+	{
+		bulletSpeed = speed;
+	}
 }

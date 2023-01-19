@@ -46,9 +46,11 @@ public class ShootTarget : StateMachineBehaviour
             } else if(currentShoot != maxShoots){
                 //GameObject bulletInstance = Instantiate(bullet, animator.GetComponent<Transform>().position, Quaternion.identity);
                 bullets[index].SetActive(true);
+				bullets[index].GetComponent<BulletFWM01>().setTrue(Time.time);
                 SoundManagerScript.PlaySound("enemyShot");
 				currentShoot++;
-                Physics2D.IgnoreCollision(animator.GetComponent<Collider2D>(), bullets[index].GetComponent<Collider2D>()); 
+                Physics2D.IgnoreCollision(animator.GetComponent<Collider2D>(), bullets[index].GetComponent<Collider2D>());
+				bullets[index].GetComponent<BulletFWM01>().setBulletSpeed(5.0f);
                 bullets[index].GetComponent<BulletFWM01>().SetDirectionBullet(direction);
                 lastShoot = Time.time;
 				index++;
@@ -59,6 +61,7 @@ public class ShootTarget : StateMachineBehaviour
 			
 			if(index > animator.GetComponent<FWM01>().size)
 			{
+				currentShoot = 0;
 				index = 0;
 			}
         } 

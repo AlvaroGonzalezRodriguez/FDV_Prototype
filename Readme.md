@@ -4,15 +4,15 @@ alu0101202556
 
 ## About the prototype
 
-<p>This is an approach to a roguelike 2D game where you control a ciborg and need to defend yourself against ordes robots enemies. This game have a lot of emphasis on fighting.</p>
+<p>This is an approach to a roguelike 2D game where you control a cyborg and need to defend yourself against hordes robots enemies. This game has a lot of emphasis on fighting.</p>
 
 ## The player
 
  * Movement
 
-<p>The character can move in every direction, meaning that this is not a platform game and the camera is simulating that it is at the top of the scene, looking down at the player. He has the number of 8 scripts associated with him just to make him walk, fight, shoot, use the objects that are in the scene and react to them. There are also some scripts who manages how the level works.</p>
-<p>He also uses a 2D capsule collider and a 2D rigidbody but, because there isn't gravity, I opted to make him move as a kinematic body type. It have a distance joint which I will explain its functionality later and the rest of component are just to make the game more appealing to the player, with the animator and the audio source components.</p>
-<p>I also need to mention that the design of the character (and the rest of the game) was made by me in Aseprite, including all of the animation and special effects. Here we can see part of the code for the character horizontal movement, where I check some conditions just to make him move.</p>
+<p>The character can move in every direction, meaning that this is not a platform game and the camera is simulating that it is at the top of the scene, looking down at the player. He has the number of 8 scripts associated with him just to make him walk, fight, shoot, use the objects that are in the scene and react to them. There are also some scripts who manage how the level works.</p>
+<p>He also uses a 2D capsule collider and a 2D rigidbody but, because there isn't gravity, I opted to make him move as a kinematic body type. It has a distance joint which I will explain its functionality later and the rest of component are just to make the game more appealing to the player, with the animator and the audio source components.</p>
+<p>I also need to mention that the design of the character (and the rest of the game) was made by me in Aseprite, including all the animation and special effects. Here we can see part of the code for the character horizontal movement, where I check some conditions just to make him move.</p>
 
 	float horizontal = Input.GetAxisRaw("Horizontal");
     float vertical = Input.GetAxisRaw("Vertical");
@@ -41,8 +41,8 @@ alu0101202556
 
 ![Alt Text](GIFs/movement1.gif)
 
-<p>The player can also dodge some attacks from the enemies. In this state, the player will not recieve any damage from the enemies and will move a little faster to the direction of the mouse. To accomplish that I created a variable *isDodging* who will be used in the collision with other objects, if it is true, it will not calculate the damage and will not change the state to knockback. There is a cooldown in this action.</p>
-<p>In this moment I also use an event to comunicate between the attack script and the movement script, the event name is *blockAttacking* and is called when the character is doing an action that blocks the attack actions, as its name says.</p>
+<p>The player can also dodge some attacks from the enemies. In this state, the player will not receive any damage from the enemies and will move a little faster to the direction of the mouse. To accomplish that I created a variable *isDodging* who will be used in the collision with other objects, if it is true, it will not calculate the damage and will not change the state to knockback. There is a cooldown in this action.</p>
+<p>At this moment I also use an event to comunicate between the attack script and the movement script, the event name is *blockAttacking* and is called when the character is doing an action that blocks the attack actions, as its name says.</p>
 
 	if(Input.GetKey(KeyCode.LeftShift) && Time.time > rechargeDodge + lastDodge)
     {
@@ -58,7 +58,7 @@ alu0101202556
 
 ![Alt Text](GIFs/movement2.gif)
 
-<p>As i said early, the player will enter in a knockup state when the player receive enought damage. It will end in the last frame of its animation using an animation event.</p>
+<p>As I said early, the player will enter a knockup state when the player recieve enough damage. It will end in the last frame of its animation using an animation event.</p>
 
 	if(dodging && animator.GetBool("isKnockback") == false)
     {
@@ -91,12 +91,12 @@ alu0101202556
 ![Alt Text](GIFs/movement3.gif)
 
 
- * Atacck
+ * Atack
 
-<p>The player needs to defens himseft, so I created some actions to help him! If the player can attack, it can do a basic 2 attack combo or, if he has done all the conditions, he can shoot a powerfull attack. All of this actions end with an animation event, like the knockback state.</p>
+<p>The player needs to defend himself, so I created some actions to help him! If the player can attack, it can do a basic 2 attack combo or, if he has done all the conditions, he can shoot a powerful attack. All of this actions end with an animation event, like the knockback state.</p>
 <p>To record when the character hit something, there is a second collider who activates when the player is doing an attack animation and, with its own script, it manages the damage that the enemy will receive</p>
-<p>The powerfull attack is a laser that the player can shoot. It has its own script and is used to calculate the damage that the enemies will receive</p>
-<p>There is also another event, named *movement* to comunicate to the movement script when he can move, because if he is attacking he cannot move</p>
+<p>The powerful attack is a laser that the player can shoot. It has its own script and is used to calculate the damage that the enemies will receive</p>
+<p>There is also another event, named *movement* to communicate to the movement script when he can move, because if he is attacking he cannot move</p>
 
 	//Basic 2 attack combo
     if(Input.GetMouseButtonDown(0))
@@ -152,15 +152,15 @@ alu0101202556
  * Properties, react to enviroment and healthbar
 
 <p>The main character has a lot of properties, base health, actual health, base damage, boost damage, charge attack damage, ... , who needs to be in constant use. I opted to create a script just for this purpose</p>
-<p>The character will make an action when he touches a enemy, a bullet or a wall.</p>
-<p>Every character of the level will have a healthbar above his head.</p>
+<p>The character will make an action when he touches an enemy, a bullet or a wall.</p>
+<p>Every character of the level will have a health bar above his head.</p>
 
 ## Enemies
 
  * Base script
 
-<p>All of the enemies of the level define the abstract class *Enemy*, they need to define, at least, how they respond to the damage, because the behaviour of the enemies are defined in the animator.</p>
-<p>In this specific level, there are two enemies, one of them can shoot at the player and the other one needs to approach the player to hit him. They have the same components, the base script, a capsule collider, a rigidbody and a animator.
+<p>All the enemies of the level define the abstract class *Enemy*, they need to define, at least, how they respond to the damage, because the behaviour of the enemies are defined in the animator.</p>
+<p>In this specific level, there are two enemies, one of them can shoot at the player and the other one needs to approach the player to hit him. They have the same components, the base script, a capsule collider, a rigidbody and an animator.
 <p>The enemy who shoots at the player uses a pool of bullets who will be created when the enemy is initialized, for performance purposes.</p>
 
 ![Alt Text](GIFs/enemy1.png)
@@ -229,7 +229,7 @@ alu0101202556
 
  * The bullets
 
-<p>Like the enemies, there is an abstract class of bullets and every enemy that can shoot will implement it. The script for it just make the calculations of its movement. The *DestroyBullet* method doesn't actually destroy the bullet but put the set active in the object in false.</p>
+<p>Like the enemies, there is an abstract class of bullets and every enemy that can shoot will implement it. The script for it just make the calculations of its movement. The *DestroyBullet* method doesn't actually destroy the bullet, but put the set active in the object in false.</p>
 
 	void FixedUpdate()
     {
@@ -273,7 +273,7 @@ alu0101202556
 
  * Level script
  
- <p>This script manages some variables related to the game difficulty and progress. It saves the time that the player have been playing the game, the number of enemies that the player has killed and the current round. It also manages the number of enemies that will be in the scene, when they can spawn and when the round will be completed. We will se later how the spawner works</p>
+<p>This script manages some variables related to the game difficulty and progress. It saves the time that the player have been playing the game, the number of enemies that the player has killed, and the current round. It also manages the number of enemies that will be in the scene, when they can spawn and when the round will be completed. We will see later how the spawner works</p>
  
 	void Update()
     {
@@ -300,14 +300,14 @@ alu0101202556
 
  * Tilemap
 
-<p>The scene is composed with a rectangular tilemap, wich is separated in 6 pivots. This pivots mark a part of the scene where some enemies can appear and how the maps move and will look.</p>
+<p>The scene is composed with a rectangular tilemap, which is separated in 6 pivots. These pivots mark a part of the scene where some enemies can appear and how the maps move and will look.</p>
 
 ![Alt Text](GIFs/scene2.png)
 
 ![Alt Text](GIFs/scene3.png)
 
-<p>There isn't actually a background but a floor, like I said in the beginning, it is not a platformer. This floor have only a tilemap and a tilemap renderer because the player can move freely over them. Then we have the wall and the obstacles, they use a different tile palette and have a static rigidbody with a tilemap and composite collider.</p>
-<p>The map is basically infinite, the player can move up or down all he wants, so we need to move the background up or down too. To accomplish that the main character have a script to move the floors when they are out of the camera sight.</p>
+<p>There isn't actually a background but a floor, like I said in the beginning, it is not a platformer. This floor has only a tilemap and a tilemap renderer because the player can move freely over them. Then we have the wall and the obstacles, they use a different tile palette and have a static rigidbody with a tilemap and composite collider.</p>
+<p>The map is basically infinite, the player can move up or down all he wants, so we need to move the background up or down too. To accomplish that, the main character have a script to move the floors when they are out of the camera sight.</p>
 
 	float size = cameraMain.GetComponent<Camera>().orthographicSize;
 	float spacing = reference.GetComponent<Renderer>().bounds.size.y;
@@ -329,24 +329,24 @@ alu0101202556
 
 ![Alt Text](GIFs/scene4.gif)
 
-<p>To render all of the sprites correctly, there are different layers in the tilemap and sprite renderer</p>
+<p>To render all the sprites correctly, there are different layers in the tilemap and sprite renderer</p>
 
  * Parallax effect
 
-<p>There is a parallax effect at the left of the scene with moves vertically. The material have a vertical image attach to it to move the texture it in the Y axis.</p>
+<p>There is a parallax effect at the left of the scene with moves vertically. The material has a vertical image attach to it to move the texture in the Y axis.</p>
 
 ![Alt Text](GIFs/scene5.gif)
 
  * Spawner
 
-<p>The spawner it's very straightforward, it has a create enemy who will be called every time the level requires a new enemy and a generate method which decides with a *Random.Range()* method which enemy will be generated.</p>
+<p>The spawner it's very straightforward, it has a creation enemy who will be called every time the level requires a new enemy and a generate method which decides with a *Random.Range()* method which enemy will be generated.</p>
 <p>Then we need a place to put the spawner and, because the level will be constantly moving, I place them in the pivots. It will generate the enemies only in the pivots that are far away from the player.</p>
 
 ![Alt Text](GIFs/scene6.gif)
 
  * Cinemachine
 
-<p>For the camera, we use the cinemachine. It will follow the player and make some special actions when some keys are pressed. For example, if the player presses the N key, the camera will transite to another virtual camera that is above the character, the same will happen when he presses the M key, he will look down.</p>
+<p>For the camera, we use the cinemachine. It will follow the player and make some special actions when some keys are pressed. For example, if the player presses the N key, the camera will transit to another virtual camera that is above the character, the same will happen when he presses the M key, he will look down.</p>
 
 ![Alt Text](GIFs/scene7.gif)
 
@@ -372,7 +372,7 @@ alu0101202556
 
  * TNT boxes
 
-<p>This is a special object who will damage all of the enemies in a determinate area. It has a a box collider, a rigidbody, a base script and a second collider who will activate when a enemy touches the box. The player can interact with it pressing the C key, it will attach the bodies of the two objects. When they are in this state, if the player press the F key, a random force will move the object. It can desactivate the joint pressing the X key.</p>
+<p>This is a special object who will damage all the enemies in a determinate area. It has a box collider, a rigidbody, a base script and a second collider who will activate when an enemy touches the box. The player can interact with it pressing the C key, it will attach the bodies of the two objects. When they are in this state, if the player presses the F key, a random force will move the object. It can deactivate the joint pressing the X key.</p>
 
 	void Update()
     {
@@ -413,4 +413,4 @@ alu0101202556
 <p>The character has a audio source to play all of the special effects that there will be in the scene. It is managed by a script who plays all of the sounds that is implemented in the game. There are a charge attack sound, an enemy shot sound and two enemy death sounds.</p>
 <p>The background music is located in a empty object who has another audio source. It play an audio clip wich is looping.</p>
 
-You can look al the sounds and a technical explanation in this link - [Presentation]()
+You can look at the sounds and a technical explanation in this link - [Presentation](https://youtu.be/JWmxQ6K1jn0)
